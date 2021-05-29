@@ -1,0 +1,204 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-size: 16px;
+  font-family: "Cairo", sans-serif;
+  color: #000;
+  line-height: 1.6;
+  background-color: #f1f3f5;
+  
+  direction: rtl;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: #999;
+}
+
+input,
+button {
+  height: 40px;
+  border-radius: 4px;
+  background-color: #222;
+  border: 1px solid #222;
+  padding: 8px 12px;
+  outline: none;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+button {
+  background-color: #05f;
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #1354d8;
+}
+
+input:focus {
+  border-color: #333;
+}
+
+.app {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.form-container {
+  background-color: #111;
+  color: #fff;
+  width: 40%;
+}
+
+.card {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: #222;
+  gap: 16px;
+  margin: 16px;
+}
+
+.card .info {
+  padding: 16px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: content;
+  overflow-wrap: anywhere;
+}
+
+.card .info p {
+  margin-top: 12px;
+}
+
+.card .info h1 {
+  margin-bottom: 8px;
+  font-size: 21px;
+}
+
+.card .img-container{
+   flex-grow: 1;
+   flex-shrink: 0;
+   overflow: hidden;
+   flex-basis: auto;
+   min-width: 200px;
+   display: flex;
+   justify-content: center;
+}
+
+.card img {
+    height: 100%;
+    width: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 8px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.stats {
+  width: 60%;
+  height: 100%;
+  background-color: #fff;
+  padding: 32px;
+  min-height: 100vh;
+}
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.cell{
+    flex:1 0 50%;
+    padding: 16px;
+    min-height: 200px;
+}
+
+.colorful {
+  background: #dd5e89; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f7bb97,
+    #dd5e89
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f7bb97,
+    #dd5e89
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 100%;
+}
+
+
+.colorful img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.colorful h1 {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+}
+
+.colorful h6 {
+  font-size: 16px;
+  text-align: center;
+}
+
+.colorful a {
+  color: #fff;
+}
+
+form .delete-link {
+  background-color: #d83232;
+  cursor: pointer;
+}
+@media(min-width:0) and (max-width:768px){
+    .form-container,.stats{
+        width: 100%;
+    }
+    .card{
+        flex-wrap: wrap;
+    }
+    .card img{
+        width: 100%;
+        height: 100%;
+    }
+    .stats{
+        padding: 24px;
+    }
+}

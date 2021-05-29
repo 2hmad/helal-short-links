@@ -5,25 +5,35 @@
     <title>هلال | الموقع العربي لأختصار الروابط</title>
     <?php include('links.php') ?>
     <?php
-    if (isset($_GET['u'])) {
-        include('connection.php');
-        $u = mysqli_real_escape_string($connect, $_GET['u']);
-        $query_fetch = mysqli_query($connect, "SELECT * FROM links WHERE short_link='$u'");
-        if (mysqli_num_rows($query_fetch) > 0) {
-            while ($row_fetch = mysqli_fetch_array($query_fetch)) {
-                $link = $row_fetch['link'];
-                $title = $row_fetch['meta_title'];
-                $desc = $row_fetch['meta_desc'];
-                $pic = $row_fetch['meta_pic'];
-                $views = $row_fetch['views'];
-                $total_views = $views + 1;
-                $sql_update = mysqli_query($connect, "UPDATE links SET views = $total_views WHERE short_link='$u'");
-                echo "$title";
-                echo "$desc";
-                echo "$pic";
-
-                header('Location: ' . $link);
-            }
+    $address = $_SERVER['REQUEST_URI'];
+    $u = preg_match("/[^\/]+$/", $address, $matches);
+    if(isset($matches[0])) {
+        $word = $matches[0];
+        if($word == "login.php") {
+            header('Location: login.php');
+        } elseif($word == "register.php") {
+            header('Location: register.php');
+        } elseif($word == "index.php") {
+            header('Location: ./');
+        } else {
+            $query_fetch = mysqli_query($connect, "SELECT * FROM links WHERE short_link='$word'");
+            if (mysqli_num_rows($query_fetch) > 0) {
+                while ($row_fetch = mysqli_fetch_array($query_fetch)) {
+                    $link = $row_fetch['link'];
+                    $title = $row_fetch['meta_title'];
+                    $desc = $row_fetch['meta_desc'];
+                    $pic = $row_fetch['meta_pic'];
+                    $views = $row_fetch['views'];
+                    $total_views = $views + 1;
+                    $sql_update = mysqli_query($connect, "UPDATE links SET views = $total_views WHERE short_link='$word'");
+                    echo '<meta property="og:title" content="'.$title.'">';
+                    echo '<meta property="og:description" content="'.$desc.'">';
+                    echo '<meta property="og:image" content="'.$pic.'">';
+                    header('Location: ' . $link);
+                }
+            } else {
+                header('Location: ./');
+            }    
         }
     }
     ?>
@@ -83,10 +93,10 @@
     </style>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" style="background-image: url('pics/background.jpg');background-size: cover;background-repeat: no-repeat;">
     <?php include('navbar.php') ?>
     <div class="container">
-        <div class="row" style="margin-top: 12%;">
+        <div class="row" style="margin-top: 10%;">
             <div class="col-lg" style="text-align:center;align-self: center;">
                 <p style="font-weight:bold;text-transform: uppercase;color: white;font-size: 35px;">اختصر روابطك</p>
                 <p style="font-weight:300;text-transform: uppercase;color: white;font-size: 15px;">وتسهيل مشاركتها بين
@@ -95,7 +105,7 @@
                     <input type="url" name="url-short" placeholder="الرابط المراد اختصاره">
                     <select name="url-option">
                         <option value="">اختر طريقة الاختصار</option>
-                        <option>http://localhost/url-shortner</option>
+                        <option>http://localhost/helal/helal-short-links</option>
                     </select>
                     <input type="submit" name="short" value="اختصار">
                 </form>
@@ -140,7 +150,7 @@
                                 $title = trim($title);
                                 return $title;
                             }
-                            
+
                             // Meta title => <meta property="og:title" content="">
                             $metaTitle = page_title("$url");
 
@@ -151,7 +161,16 @@
                             // Meta image => <meta property="og:image" content="">
                             $metaPic = "$picture_path";
 
-                            $sql = "INSERT INTO links (link, short_link, website, meta_title, meta_desc, meta_pic, ip) VALUES ('$url', '$short_link', '$option', '$metaTitle', '$metaDesc', '$metaPic', '$ip')";
+                            date_default_timezone_set("Africa/Cairo");
+                            $current_date = date("Y/m/d");
+                            $current_time = date("h:i A");
+
+                            if(isset($_SESSION['email'])) {
+                                $email = $_SESSION['email'];
+                            } else {
+                                $email = "";
+                            }
+                            $sql = "INSERT INTO links (email, link, short_link, website, date, time, meta_title, meta_desc, meta_pic, ip) VALUES ('$email', '$url', '$short_link', '$option', '$current_date', '$current_time', '$metaTitle', '$metaDesc', '$metaPic', '$ip')";
                             $query = mysqli_query($connect, $sql);
                             if ($query) {
                                 echo "<div class='alert alert-success' style='margin-top:2%'>تم اضافة الرابط المختصر</div>";
@@ -167,7 +186,12 @@
                     <table style="color:white;margin-top:5%">
                         <?php
                         $ip = $_SERVER['REMOTE_ADDR'];
-                        $sql_select = "SELECT * FROM links WHERE ip='$ip'";
+                        if(isset($_SESSION['email'])) {
+                            $email = $_SESSION['email'];
+                            $sql_select = "SELECT * FROM links WHERE email='$email'";
+                        } else {
+                            $sql_select = "SELECT * FROM links WHERE ip='$ip'";
+                        }
                         $query_select = mysqli_query($connect, $sql_select);
                         if (mysqli_num_rows($query_select) > 0) {
                             while ($row = mysqli_fetch_array($query_select)) {
@@ -177,12 +201,14 @@
                                 echo '
                                     <tr>
                                         <th>
-                                            <a href="statistics.php?id=' . $id . '" style="float: left;">' . $short_link . '</a>
+                                            <a href="stats.php?id=' . $id . '" style="float: left;">' . $short_link . '</a>
                                             <button class="otherButton"><i class="far fa-paste"></i></button>
                                         </th>
                                     </tr>
                                 ';
                             }
+                        } else {
+                            echo '<caption>لا توجد روابط مختصرة</caption>';
                         }
                         ?>
                     </table>

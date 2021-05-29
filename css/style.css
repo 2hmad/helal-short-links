@@ -1,5 +1,4 @@
-*,
-html {
+*, html {
     margin: 0;
     padding: 0;
 }
@@ -7,9 +6,6 @@ html {
 body {
     font-family: 'Cairo', sans-serif !important;
     min-height: 100vh;
-    background-image: url('../pics/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
     direction: rtl;
 }
 
@@ -17,6 +13,40 @@ a {
     text-decoration: none !important;
     color: white !important;
     outline: none;
+}
+
+nav {
+    padding: 10px;
+}
+
+.login-nav {
+    background: #1277ee;
+    color: white;
+    padding: 5px;
+    border: 1px solid #1277ee;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-nav:hover {
+    background: transparent;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+}
+
+.register-nav {
+    background: transparent;
+    color: white;
+    padding: 5px;
+    border: 1px solid #1277ee;
+    border-radius: 5px;
+    outline: none;
+}
+
+.register-nav:hover {
+    background-color: #1277ee;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
 }
 
 .urls {
@@ -35,12 +65,11 @@ a {
     min-height: 600px;
     max-width: 90%;
     border-radius: 20px;
-    box-shadow: 0px 0px 8px 0px #383838;
+    box-shadow: 0px 0px 8px 0px #b5b5b5;
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
 }
-
 
 /* Start Media Query (Responsive) */
 
@@ -70,9 +99,7 @@ a {
         overflow-x: scroll;
         justify-content: start;
     }
-    .recent-courses,
-    .recommended,
-    .handpicked {
+    .recent-courses, .recommended, .handpicked {
         margin-bottom: 15%;
     }
     .footer {
@@ -89,6 +116,5 @@ a {
         text-align: center;
     }
 }
-
 
 /* End Media Query */
