@@ -18,34 +18,35 @@
         <?php
         include('connection.php');
         $id = $_GET['id'];
-        if(isset($_SESSION['email'])) {
+        if (isset($_SESSION['email'])) {
           $email = $_SESSION['email'];
           $sql_check = mysqli_query($connect, "SELECT * FROM links WHERE email='$email' AND id='$id'");
-          if(mysqli_num_rows($sql_check) > 0) {
+          if (mysqli_num_rows($sql_check) > 0) {
           } else {
             header('Location: index.php');
           }
         } else {
           $ip = $_SERVER['REMOTE_ADDR'];
           $sql_check = mysqli_query($connect, "SELECT * FROM links WHERE ip='$ip' AND id='$id'");
-          if(mysqli_num_rows($sql_check) > 0) {
+          if (mysqli_num_rows($sql_check) > 0) {
           } else {
             header('Location: index.php');
           }
         }
         $sql = "SELECT * FROM links WHERE id = $id";
         $query = mysqli_query($connect, $sql);
-        while ($row = mysqli_fetch_array($query)) {
-          $link = $row['link'];
-          $title = $row['meta_title'];
-          $desc = $row['meta_desc'];
-          $pic = $row['meta_pic'];
-          $views = $row['views'];
-          $website = $row['website'];
-          $code = $row['short_link'];
-          $date = $row['date'];
-          $time = $row['time'];
-          echo '
+        if (mysqli_num_rows($query) > 0) {
+          while ($row = mysqli_fetch_array($query)) {
+            $link = $row['link'];
+            $title = $row['meta_title'];
+            $desc = $row['meta_desc'];
+            $pic = $row['meta_pic'];
+            $views = $row['views'];
+            $website = $row['website'];
+            $code = $row['short_link'];
+            $date = $row['date'];
+            $time = $row['time'];
+            echo '
             <div class="img-container">
             <img class="pic" src="' . $pic . '" alt="' . $title . '" />
             </div>
@@ -56,6 +57,9 @@
             <p class="description">' . $desc . '</p>  
             </div>
             ';
+          }
+        } else {
+          header('Location: index.php');
         }
         ?>
 
@@ -76,6 +80,9 @@
           $sql = "UPDATE links SET meta_title = '$change_title', meta_desc = '$change_desc', meta_pic = '$change_pic' WHERE id = $id";
           $query = mysqli_query($connect, $sql);
           echo "<div style='text-align: center;color: #00e800;font-weight: bold;'><i class='fad fa-check-circle'></i> تم تعديل خصائص الرابط</div>";
+          
+          $url = "https://developers.facebook.com/tools/debug/echo/?q=http://$website/$code";
+          echo "<iframe width=0 height=0 marginwidth=0 marginheight=0 frameborder=0 name='theframe' src='$url'>$url</iframe>";
         } else {
           echo "<div style='text-align: center;color: red;font-weight: bold;'><i class='fad fa-times-octagon'></i> برجاء عدم ترك حقل فارغ</div>";
         }
@@ -121,7 +128,7 @@
           <div class="colorful">
             <img src="./link-2.svg" alt="Stats" />
             <h1>الرابط المختصر</h1>
-            <h6 style="text-align: center;"><a href="<?php echo "$website/$code" ?>"><?php echo "$website/$code" ?></a></h6>
+            <h6 style="text-align: center;"><a href="<?php echo "http://$website/$code" ?>"><?php echo "$website/$code" ?></a></h6>
           </div>
         </div>
         <div class="cell full">

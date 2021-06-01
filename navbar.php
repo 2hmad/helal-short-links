@@ -3,11 +3,20 @@
     <div class="sign">
         <?php
         if (isset($_SESSION['email'])) {
-            echo '<a href="logout.php"><button type="button" class="login-nav">تسجيل الخروج</button></a>';
+            $email = $_SESSION['email'];
+            $sql = mysqli_query($connect, "SELECT * FROM users WHERE email='$email'");
+            while($row = mysqli_fetch_array($sql)) {
+                $role = $row['role'];
+                if($role == "Admin") {
+                    echo '<a href="add-user.php"><button type="button" class="login-nav">اضافة عضو</button></a>';
+                }
+            }
+            echo '
+            <a href="logout.php"><button type="button" class="login-nav">تسجيل الخروج</button></a>
+            ';
         } else {
             echo '
             <a href="login.php"><button type="button" class="login-nav">تسجيل الدخول</button></a>
-            <a href="register.php"><button type="button" class="register-nav">تسجيل حساب</button></a>
             ';
         }
         ?>

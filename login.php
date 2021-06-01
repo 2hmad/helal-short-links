@@ -55,7 +55,6 @@
         <input type="password" name="pass-login" placeholder="كلمة المرور">
         <div><input type="checkbox" name="stay-login" id="stay-login"><label style="margin-right: 1%;color:white" for="stay-login">تذكرني</label></div>
         <input type="submit" name="login" value="تسجيل الدخول">
-        <span style="text-align: center;position: relative;top: 20px;">أليس لديك حساب ؟ <a href="register.php" style="text-decoration: underline !important;">انشئ حسابك الان</a></span>
         <?php
         if(isset($_SESSION['email'])) {
             header('Location: ./');
@@ -70,7 +69,7 @@
                     echo "<div class='alert alert-success'>تم تسجيل الدخول بنجاح سيتم نقلك خلال 5 ثوان</div>";
                     header('Refresh: 5; URL=./');
                 } else {
-                    echo "<div class='alert alert-danger'>لا توجد حساب بهذه البيانات برجاء <a href='register.php'>تسجيل حساب</a></div>";
+                    echo "<div class='alert alert-danger'>لا توجد حساب بهذه البيانات</div>";
                 }
             } else {
                 echo "<div class='alert alert-danger'>لا تترك حقول فارغة</div>";
