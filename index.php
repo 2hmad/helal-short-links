@@ -49,8 +49,10 @@
 
                     <meta property="fb:app_id" content="2732149070222866" />
 
-    <?php
-                    header('Refresh: 1; URL=' . $link);
+    <?php           
+                    
+                    header('Refresh: 0; URL=' . $link);
+                    die();
                 }
             } else {
                 header('Location: ./');

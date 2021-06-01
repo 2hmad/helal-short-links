@@ -47,8 +47,8 @@
             $date = $row['date'];
             $time = $row['time'];
             echo '
-            <div class="img-container">
-            <img class="pic" src="' . $pic . '" alt="' . $title . '" />
+            <div class="img-container" style="width:200px">
+            <img class="pic" src="' . $pic . '" alt="' . $title . '" style="width:100%;object-fit:cover" />
             </div>
   
             <div class="info">
@@ -82,7 +82,7 @@
           echo "<div style='text-align: center;color: #00e800;font-weight: bold;'><i class='fad fa-check-circle'></i> تم تعديل خصائص الرابط</div>";
           
           $url = "https://developers.facebook.com/tools/debug/echo/?q=http://$website/$code";
-          echo "<iframe width=0 height=0 marginwidth=0 marginheight=0 frameborder=0 name='theframe' src='$url'>$url</iframe>";
+          echo "<iframe width=0 height=0 marginwidth=0 marginheight=0 frameborder=0 name='theframe' target='_top' src='$url'>$url</iframe>";
         } else {
           echo "<div style='text-align: center;color: red;font-weight: bold;'><i class='fad fa-times-octagon'></i> برجاء عدم ترك حقل فارغ</div>";
         }

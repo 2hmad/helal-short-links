@@ -43,7 +43,7 @@
                     <meta property="twitter:description" content="<?php echo $desc ?>">
                     <meta property="twitter:image" content="<?php echo $pic ?>">
     <?php
-                    header('Refresh: 1; URL=' . $link);
+                    header('Refresh: 0; URL=' . $link);
                 }
             } else {
                 header('Location: http://lckerava.net/');
